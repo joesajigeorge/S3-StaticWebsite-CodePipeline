@@ -22,7 +22,19 @@ module "s3" {
   s3_bucketname = var.s3_bucketname
 }
 
+module "lambda_trigger" {
+  depends_on = [ module.s3 ]
+  source         = "./modules/invalidation_lambda"
+  env            = var.env
+  region         = var.region
+  projectname    = var.projectname
+  s3_bucket_id = module.s3.s3_bucket_id
+  s3_bucket_arn = module.s3.s3_bucket_arn
+  aws_cloudfront_distribution_id = module.s3.aws_cloudfront_distribution_id
+}
+
 module "developerTools" {
+  depends_on = [module.lambda_trigger]
   source         = "./modules/developerTools"
   env            = var.env
   region         = var.region
