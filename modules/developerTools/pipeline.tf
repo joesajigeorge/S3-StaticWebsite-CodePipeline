@@ -51,6 +51,23 @@ resource "aws_codepipeline" "default" {
   }
 
   stage {
+    name = "Approve"
+
+    action {
+      name     = "Approval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
+
+      configuration = {
+        NotificationArn = aws_sns_topic.approval_topic.arn
+        CustomData = "${var.projectname} ${var.env} environment pre deployment approval"
+      }
+    }
+  }
+
+  stage {
     name = "Deploy"
 
     action {

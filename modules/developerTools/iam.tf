@@ -43,7 +43,8 @@ data "aws_iam_policy_document" "default" {
       "iam:PassRole",
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild",
-      "codestar-connections:UseConnection"
+      "codestar-connections:UseConnection",
+      "sns:*"
     ]
 
     resources = ["*"]
