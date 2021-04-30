@@ -3,7 +3,8 @@ resource "aws_codepipeline" "default" {
     aws_iam_role.default, 
     aws_iam_role_policy_attachment.default,
     aws_codebuild_project.main,
-    aws_s3_bucket.codepipeline_bucket 
+    aws_s3_bucket.codepipeline_bucket ,
+    aws_sns_topic.approval_topic
     ]
   name     = "${var.projectname}-${var.env}-pipeline"
   role_arn = aws_iam_role.default.arn
